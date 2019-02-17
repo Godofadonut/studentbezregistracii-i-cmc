@@ -1,0 +1,194 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Collections;
+using System.IO;
+
+namespace FirstEnum
+{
+    class Program
+    {
+        class Student
+        {
+            public int Datar { get; set; }
+
+            public int Kurs { get; set; }
+            public int Telefon { get; set; }
+            public string FIO { get; set; }
+            public string Adr { get; set; }
+            public string Gruppa { get; set; }
+            public string Fakultet { get; set; }
+            public DateTime Birthday;
+            public void SetBirthday(int day, int month, int year)
+            {
+                Birthday = new DateTime(year, month, day);
+            }
+            public int CalculateAge()
+            {
+                int YearsPassed = DateTime.Now.Year - Birthday.Year;
+
+                if (DateTime.Now.Month < Birthday.Month || (DateTime.Now.Month == Birthday.Month && DateTime.Now.Day < Birthday.Day))
+                {
+                    YearsPassed--;
+                }
+
+                return YearsPassed;
+            }
+
+            public override string ToString()
+            {
+                return string.Format("ФИО:{0},Факультет:{1},Курс:{2},Группа:{3},Возраст :{4},Адрес:{5} ,Телефон:{6}, Дата рождения{7}", FIO, Fakultet, Kurs, Gruppa, Datar, Adr, Telefon,Birthday);
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            bool kones = true;
+            ArrayList al = new ArrayList();
+
+            while (kones)
+            {
+                Console.WriteLine();
+                PrintMessage();
+                int a = int.Parse(Console.ReadLine());
+                if (a == 1)
+                {
+                    AddNewStudent(al);
+                }
+                else if (a == 2)
+                {
+                    PrintAllStudent(al);
+                }
+                else if (a == 3)
+                {
+                    FindGruppa(al);
+                }
+                else if (a == 4)
+                {
+                    FindFakultet(al);
+                }
+                else if (a == 8)
+                {
+                    SaveToFiles(al);
+                }
+
+                else kones = false;
+            }
+
+        }
+
+        private static void SaveToFiles(ArrayList al)
+        {
+            DirectoryInfo di = new DirectoryInfo("Data");
+            di.Create();
+            StreamWriter sw = File.CreateText(@"Data\student.txt");
+            foreach (var item in al)
+            {
+                Student st = (Student)item;
+                sw.WriteLine(st.ToString());
+            }
+            sw.Close();
+        }
+
+        private static void FindGruppa(ArrayList al)
+        {
+            Console.WriteLine("Введите группу:");
+            string findGruppa = Console.ReadLine();
+            bool fd = false;
+            Student findSt = new Student();
+            foreach (var item in al)
+            {
+               
+                Student st = (Student)item;
+                if (findGruppa == st.Gruppa)
+                {
+                    findSt = st;
+                    fd = true;
+                    break;
+                }
+            }
+            if (fd) { Console.WriteLine(findSt.ToString()); }
+            else { Console.WriteLine("Группа не найдена"); }
+        }
+        private static void FindFakultet(ArrayList al)
+        {
+            Console.WriteLine("Введите факультет:");
+            string findFakultet = Console.ReadLine();
+            bool fd = false;
+            Student findSt = new Student();
+            foreach (var item in al)
+            {
+                Student st = (Student)item;
+                if (findFakultet == st.Fakultet)
+                {
+                    findSt = st;
+                    fd = true;
+                    break;
+                }
+            }
+            if (fd) { Console.WriteLine(findSt.ToString()); }
+           
+            else { Console.WriteLine("Факультет не найден"); }
+        }
+
+        private static void PrintMessage()
+        {
+            Console.WriteLine("Для добавления студента нажмите на 1");
+            Console.WriteLine("Для получения списка нажмите на 2");
+            Console.WriteLine("Для вывода списка группы нажмите на 3");
+            Console.WriteLine("Для вывода списка факультета нажмите на 4");
+            Console.WriteLine("Для сохранения нажмите на 8");
+            Console.WriteLine("Для выхода из приложения на 9");
+        }
+
+        private static void PrintAllStudent(ArrayList al)
+        {
+            foreach (var item in al)
+            {
+                Student p = (Student)item;
+                Console.WriteLine(p.ToString());
+            }
+        }
+
+        private static void AddNewStudent(ArrayList al)
+        {
+            string fio; int Datar; string grupa; string Adr; string Fakultet; int Kurs; int Telefon;
+            Console.WriteLine("Введите пожалуйста фамилию студента");
+            fio = Console.ReadLine();
+
+            Console.WriteLine("Факультет");
+            Fakultet = Console.ReadLine();
+
+            Console.WriteLine("Курс:");
+            Kurs = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Группа:");
+            grupa = Console.ReadLine();
+
+            Console.WriteLine("Возраст:");
+            Datar = int.Parse(Console.ReadLine());
+            Console.WriteLine("Дату рождения:");
+            Datar = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Адрес");
+            Adr = Console.ReadLine();
+
+            Console.WriteLine("Телефон");
+            Telefon = int.Parse(Console.ReadLine());
+
+
+            al.Add(new Student { FIO = fio, Fakultet = Fakultet, Kurs = Kurs, Gruppa = grupa, Datar = Datar, Adr = Adr, Telefon = Telefon });
+        }
+
+
+
+
+
+        private static void LoadStudent(ArrayList al)
+        {
+            al.Add(new Student { Datar = 18, FIO = "Pushkin", Fakultet = "MEOiM", Gruppa = "1720", Adr = "Pushkina2", Kurs = 2, Telefon = 2242424 });
+
+        }
+    }
+}
