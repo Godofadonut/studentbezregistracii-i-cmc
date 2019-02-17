@@ -19,26 +19,10 @@ namespace FirstEnum
             public string Adr { get; set; }
             public string Gruppa { get; set; }
             public string Fakultet { get; set; }
-            public DateTime Birthday;
-            public void SetBirthday(int day, int month, int year)
-            {
-                Birthday = new DateTime(year, month, day);
-            }
-            public int CalculateAge()
-            {
-                int YearsPassed = DateTime.Now.Year - Birthday.Year;
-
-                if (DateTime.Now.Month < Birthday.Month || (DateTime.Now.Month == Birthday.Month && DateTime.Now.Day < Birthday.Day))
-                {
-                    YearsPassed--;
-                }
-
-                return YearsPassed;
-            }
 
             public override string ToString()
             {
-                return string.Format("ФИО:{0},Факультет:{1},Курс:{2},Группа:{3},Возраст :{4},Адрес:{5} ,Телефон:{6}, Дата рождения{7}", FIO, Fakultet, Kurs, Gruppa, Datar, Adr, Telefon,Birthday);
+                return string.Format("ФИО:{0},Факультет:{1},Курс:{2},Группа:{3},Возраст :{4},Адрес:{5} ,Телефон:{6}", FIO, Fakultet, Kurs, Gruppa, Datar, Adr, Telefon);
             }
         }
 
@@ -128,7 +112,7 @@ namespace FirstEnum
                 }
             }
             if (fd) { Console.WriteLine(findSt.ToString()); }
-           
+            
             else { Console.WriteLine("Факультет не найден"); }
         }
 
@@ -167,8 +151,6 @@ namespace FirstEnum
             grupa = Console.ReadLine();
 
             Console.WriteLine("Возраст:");
-            Datar = int.Parse(Console.ReadLine());
-            Console.WriteLine("Дату рождения:");
             Datar = int.Parse(Console.ReadLine());
 
             Console.WriteLine("Адрес");
