@@ -1,1 +1,0 @@
-# studentbezregistracii-i-cmc
